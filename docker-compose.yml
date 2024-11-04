@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"  # Porta de acesso ao backend
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/security_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"  # Porta de acesso ao frontend
+
+volumes:
+  mongo_data:
